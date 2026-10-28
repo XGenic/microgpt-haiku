@@ -4,6 +4,21 @@ A small educational project exploring the mechanics of modern transformer-based 
 
 This project began with Andrej Karpathy's MicroGPT/Makemore concepts and evolved into an exploration of tokenizer design, transformer architecture, training dynamics, and GPU acceleration. The goal was never to produce state-of-the-art poetry, but to understand *why* modern LLMs work.
 
+## Running the experiments
+
+Both implementations use the included `input.txt` haiku corpus:
+
+- [`train_haiku_gpt.py`](train_haiku_gpt.py) is the pure-Python transformer and scalar autograd version (standard library only, deliberately slow).
+- [`microTorch.py`](microTorch.py) is the PyTorch version (uses CUDA by default).
+
+```bash
+python train_haiku_gpt.py
+# Or, after installing PyTorch:
+python microTorch.py
+```
+
+For the PyTorch version without CUDA, set `ALLOW_CPU=1` before running it; training will be slower. These are learning scripts, not a packaged library.
+
 ## Goals
 
 * Understand the core components of a transformer language model.
