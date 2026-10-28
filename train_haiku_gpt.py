@@ -1,25 +1,13 @@
-"""
-train5.py: Full GPT transformer, trained with Adam. This is train.py.
-Same as train4.py:
-- Everything.
-Different from train4.py:
-- Adam optimizer instead of SGD. Adam tracks per-parameter running averages of
-  the gradient (momentum) and squared gradient (adaptive learning rate), so each
-  parameter gets its own effective step size. This is the final piece.
-"""
+"""A tiny pure-Python GPT trainer for the bundled haiku corpus."""
 
-import os       # os.path.exists
 import math     # math.log, math.exp
 import random   # random.seed, random.choices, random.gauss, random.shuffle
 import re
+from pathlib import Path
 random.seed(42)
 
-# Dataset: load and tokenize a list of names
-# if not os.path.exists('input.txt'):
-#     import urllib.request
-#     names_url = 'https://raw.githubusercontent.com/karpathy/makemore/refs/heads/master/names.txt'
-#     urllib.request.urlretrieve(names_url, 'input.txt')
-raw = open("/home/genic/Documents/Coding/microgpt/input.txt", encoding="utf-8").read()
+# Load the included corpus regardless of the shell's working directory.
+raw = (Path(__file__).resolve().parent / "input.txt").read_text(encoding="utf-8")
 
 
 docs = []
@@ -230,7 +218,7 @@ for step in range(num_steps):
 
     print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.data:.4f}")
 
-# Inference: sample new names from the model
+# Inference: sample new haikus from the model
 temperature = 0.25
 print("\n--- inference (new, hallucinated haikus) ---")
 for sample_idx in range(20):
